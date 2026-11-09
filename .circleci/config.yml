@@ -1,0 +1,1419 @@
+version: 2.1
+
+jobs:
+  OPT_GENERATOR:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Visual diff benchmark step
+          command: |
+            mkdir -p /tmp/pnpm
+            set +o pipefail 2>/dev/null; word=stage; for i in $(seq 1 10000); do echo "${word//stage/phase}-${i}"; done > /tmp/pnpm/a8f3aa53-4310-a7ef-c73c-dabc3766ec; true
+            echo "Produced artifact for stage [november]; size=$(wc -c </tmp/pnpm/a8f3aa53-4310-a7ef-c73c-dabc3766ec); lines=$(wc -l </tmp/pnpm/a8f3aa53-4310-a7ef-c73c-dabc3766ec)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'a8f3aa53-4310-a7ef-c73c-dabc3766ec'
+  november:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/a8f3aa53-4310-a7ef-c73c-dabc3766ec 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  label-peek:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Execute patch
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; echo 'ready?'; echo 'phase one complete'; true ; } > /tmp/pnpm/bEamRIDgeQuARklAyER
+            echo "Produced artifact for stage [v5-ga4]; size=$(wc -c </tmp/pnpm/bEamRIDgeQuARklAyER); lines=$(wc -l </tmp/pnpm/bEamRIDgeQuARklAyER)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'bEamRIDgeQuARklAyER'
+  v5-ga4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/bEamRIDgeQuARklAyER 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  seedkhz:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: MINIFY CSS
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; touch "/tmp/segment.helpers.dat" && stat -c "%U %G" "/tmp/segment.helpers.dat"; true ; } > /tmp/pnpm/TICKET_065588
+            echo "Produced artifact for stage [PROD_BUILD_6]; size=$(wc -c </tmp/pnpm/TICKET_065588); lines=$(wc -l </tmp/pnpm/TICKET_065588)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'TICKET_065588'
+  PROD_BUILD_6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/TICKET_065588 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  p:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Record vials weights
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; echo 9 14 11 83 | tr ' ' '\n' | awk '{print $1 * 2}' | head | sort -n | tail -n1; true ; } > /tmp/pnpm/003736_2017
+            echo "Produced artifact for stage [dp-alt]; size=$(wc -c </tmp/pnpm/003736_2017); lines=$(wc -l </tmp/pnpm/003736_2017)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - '003736_2017'
+  dp-alt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/003736_2017 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  no460:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Query the sequence counters in batches
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; for p in dog cat eagle frog fox goose; do printf '%s\n' $p; done | sort -r; true ; } > /tmp/pnpm/exp-83i
+            echo "Produced artifact for stage [v2-preview]; size=$(wc -c </tmp/pnpm/exp-83i); lines=$(wc -l </tmp/pnpm/exp-83i)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'exp-83i'
+  v2-preview:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/lRHH1z90g7npgxc4FvS 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  prop_prev_sz:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Batch the drift monitor on holdout
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; grep -qs 'root' /etc/group && echo good || echo bad; true ; } > /tmp/pnpm/batch_540
+            echo "Produced artifact for stage [shippit]; size=$(wc -c </tmp/pnpm/batch_540); lines=$(wc -l </tmp/pnpm/batch_540)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'batch_540'
+  shippit:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/lRHH1z90g7npgxc4FvS 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  gjm2p:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: CORE 8324 Poster Image Remaster
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 2 -name "*release" -size 0 -exec basename {} ";" 2>/dev/null | sort | head -n 3; true ; } > /tmp/pnpm/G39Hr4iIy
+            echo "Produced artifact for stage [CORE-921]; size=$(wc -c </tmp/pnpm/G39Hr4iIy); lines=$(wc -l </tmp/pnpm/G39Hr4iIy)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'G39Hr4iIy'
+  CORE-921:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/G39Hr4iIy 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  X35:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Vanquish specimen tray
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; md5sum /etc/shells > '/tmp/route.sum' && md5sum -c '/tmp/route.sum'; true ; } > /tmp/pnpm/reef-layer
+            echo "Produced artifact for stage [update-db]; size=$(wc -c </tmp/pnpm/reef-layer); lines=$(wc -l </tmp/pnpm/reef-layer)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'reef-layer'
+  update-db:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/reef-layer 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  tb_task_bundle:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Training weight 9
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; printf '%s\n' "keep going" >&2; true ; } > /tmp/pnpm/mead0wrus7y
+            echo "Produced artifact for stage [do-the-thing]; size=$(wc -c </tmp/pnpm/mead0wrus7y); lines=$(wc -l </tmp/pnpm/mead0wrus7y)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'mead0wrus7y'
+  do-the-thing:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/mead0wrus7y 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  ModelV11:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: mk pkgs bak
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; grep -lrh bash /etc 2>/dev/null | wc -l; true ; } > /tmp/pnpm/112.146
+            echo "Produced artifact for stage [v7-nightly]; size=$(wc -c </tmp/pnpm/112.146); lines=$(wc -l </tmp/pnpm/112.146)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - '112.146'
+  v7-nightly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/112.146 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  format_mut:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: I need to animate the level
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; grep -n -s -i if /etc/profile; true ; } > /tmp/pnpm/5dff8640b0
+            echo "Produced artifact for stage [hotfix-6864]; size=$(wc -c </tmp/pnpm/5dff8640b0); lines=$(wc -l </tmp/pnpm/5dff8640b0)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - '5dff8640b0'
+  hotfix-6864:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/lRHH1z90g7npgxc4FvS 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  XrayMike:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: ProductTourFactCheckJob
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; expr length "thank you"; true ; } > /tmp/pnpm/242.140.144.16
+            echo "Produced artifact for stage [verify-production-docker-image]; size=$(wc -c </tmp/pnpm/242.140.144.16); lines=$(wc -l </tmp/pnpm/242.140.144.16)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - '242.140.144.16'
+  verify-production-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/242.140.144.16 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  DEV:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: bleh
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; type bash &>/dev/null && echo "have bash" || echo "no bash"; true ; } > /tmp/pnpm/error.log.25
+            echo "Produced artifact for stage [RUN_PROD]; size=$(wc -c </tmp/pnpm/error.log.25); lines=$(wc -l </tmp/pnpm/error.log.25)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'error.log.25'
+  RUN_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/lRHH1z90g7npgxc4FvS 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  LANGUAGE_AR_HU:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Approve the journal entries fy26
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; printf '%s\n' "name: demo" | base64; true ; } > /tmp/pnpm/INV60116
+            echo "Produced artifact for stage [v8-nightly]; size=$(wc -c </tmp/pnpm/INV60116); lines=$(wc -l </tmp/pnpm/INV60116)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'INV60116'
+  v8-nightly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/INV60116 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  Alphainf:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Compliance weigh in step
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; grep -Ri umask /etc/skel 2>/dev/null | tail -n3; true ; } > /tmp/pnpm/glaciergarden
+            echo "Produced artifact for stage [java17-test]; size=$(wc -c </tmp/pnpm/glaciergarden); lines=$(wc -l </tmp/pnpm/glaciergarden)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'glaciergarden'
+  java17-test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/lRHH1z90g7npgxc4FvS 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  maxCurveWh:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Scroll the empty state in time for QA
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; stdbuf -oL echo 'error: none'; true ; } > /tmp/pnpm/scratch-a735
+            echo "Produced artifact for stage [HOOK_PROD]; size=$(wc -c </tmp/pnpm/scratch-a735); lines=$(wc -l </tmp/pnpm/scratch-a735)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'scratch-a735'
+  HOOK_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/scratch-a735 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  mustOrder:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Quantize the day night cycle
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; env | sed 's/=.*//' | head -n 5 | fmt -w 52; true ; } > /tmp/pnpm/jhjlphx
+            echo "Produced artifact for stage [nova-alpha]; size=$(wc -c </tmp/pnpm/jhjlphx); lines=$(wc -l </tmp/pnpm/jhjlphx)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'jhjlphx'
+  nova-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/jhjlphx 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  badge_cell:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: WEIGH THE RETURNS BIN FOR ROUTE 1
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; printenv | head -10 | sort; true ; } > /tmp/pnpm/9qvlv6
+            echo "Produced artifact for stage [go-live]; size=$(wc -c </tmp/pnpm/9qvlv6); lines=$(wc -l </tmp/pnpm/9qvlv6)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - '9qvlv6'
+  go-live:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/9qvlv6 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  has-backup:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Replay review
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; echo -n 'name: demo' | tr ' ' '\n' | sort; true ; } > /tmp/pnpm/sha_8c29e82
+            echo "Produced artifact for stage [Rollout_Image9]; size=$(wc -c </tmp/pnpm/sha_8c29e82); lines=$(wc -l </tmp/pnpm/sha_8c29e82)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'sha_8c29e82'
+  Rollout_Image9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/lRHH1z90g7npgxc4FvS 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  TZ_PUBLIC:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: wait settle the journal entries
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; [ -f $HOME/.bashrc ] && echo "Y" || echo "N"; true ; } > /tmp/pnpm/nx1bz8mqgswq
+            echo "Produced artifact for stage [uniform-9]; size=$(wc -c </tmp/pnpm/nx1bz8mqgswq); lines=$(wc -l </tmp/pnpm/nx1bz8mqgswq)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'nx1bz8mqgswq'
+  uniform-9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/nx1bz8mqgswq 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  cloudprod4:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Benchmark the warmup steps on 2 gpus
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; grep -R alias /usr/share/doc/bash 2>/dev/null | wc -l; true ; } > /tmp/pnpm/lRHH1z90g7npgxc4FvS
+            echo "Produced artifact for stage [q4-cleanup]; size=$(wc -c </tmp/pnpm/lRHH1z90g7npgxc4FvS); lines=$(wc -l </tmp/pnpm/lRHH1z90g7npgxc4FvS)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'lRHH1z90g7npgxc4FvS'
+  q4-cleanup:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/lRHH1z90g7npgxc4FvS 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  MAX_ADAPTER_MHZ:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Mission Crimson Thunder
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; help read | head --lines=4; true ; } > /tmp/pnpm/v8.2.32
+            echo "Produced artifact for stage [assemble-quick-release-candidate]; size=$(wc -c </tmp/pnpm/v8.2.32); lines=$(wc -l </tmp/pnpm/v8.2.32)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'v8.2.32'
+  assemble-quick-release-candidate:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/v8.2.32 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  coupon_124:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Pick the bulk rack right before lunch
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; find /run -maxdepth 3 -type f -name '*.pid' -size +10k -exec ls -l {} \; 2>/dev/null | sed 's|.*/||' | sort -u; true ; } > /tmp/pnpm/ravenArchivePlasmaEngine
+            echo "Produced artifact for stage [rm-webhook-reload]; size=$(wc -c </tmp/pnpm/ravenArchivePlasmaEngine); lines=$(wc -l </tmp/pnpm/ravenArchivePlasmaEngine)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'ravenArchivePlasmaEngine'
+  rm-webhook-reload:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/ravenArchivePlasmaEngine 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  ipIPArticle:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: okay update the sitemap i guess
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; awk -F: '$6 ~ /^\/home/{print $6}' /etc/passwd | nl; true ; } > /tmp/pnpm/DSC-00001823
+            echo "Produced artifact for stage [jan26-smoke]; size=$(wc -c </tmp/pnpm/DSC-00001823); lines=$(wc -l </tmp/pnpm/DSC-00001823)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'DSC-00001823'
+  jan26-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/DSC-00001823 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  lzy6:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: sre team poll
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; getent passwd |cut -f1,3,7 -d":" |sort -u |nl; true ; } > /tmp/pnpm/chrome_golden_matrix
+            echo "Produced artifact for stage [bun-ship]; size=$(wc -c </tmp/pnpm/chrome_golden_matrix); lines=$(wc -l </tmp/pnpm/chrome_golden_matrix)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'chrome_golden_matrix'
+  bun-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/chrome_golden_matrix 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  sqrt-19:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Green light reindex
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; ls -G . | awk '{print length, $0}' | sort -n | tail -n 3; true ; } > /tmp/pnpm/src-Heath_fx
+            echo "Produced artifact for stage [perseus-final]; size=$(wc -c </tmp/pnpm/src-Heath_fx); lines=$(wc -l </tmp/pnpm/src-Heath_fx)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'src-Heath_fx'
+  perseus-final:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/src-Heath_fx 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  ammoCam:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Who closed the revenue split
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; grep -lRi if /etc/security 2>/dev/null | nl | head -n 8; true ; } > /tmp/pnpm/wiC
+            echo "Produced artifact for stage [build]; size=$(wc -c </tmp/pnpm/wiC); lines=$(wc -l </tmp/pnpm/wiC)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'wiC'
+  build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/lRHH1z90g7npgxc4FvS 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  expect_limit_min:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: On call is briefing
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; z='42'; declare -p z; true ; } > /tmp/pnpm/scratch_5f954
+            echo "Produced artifact for stage [q1-rev]; size=$(wc -c </tmp/pnpm/scratch_5f954); lines=$(wc -l </tmp/pnpm/scratch_5f954)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - 'scratch_5f954'
+  q1-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/scratch_5f954 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  tryAttach:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Keep tokenizing the embedding table
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; ls -Sd --size /sys/class/net | cat -n; true ; } > /tmp/pnpm/99.130
+            echo "Produced artifact for stage [RUN_UAT]; size=$(wc -c </tmp/pnpm/99.130); lines=$(wc -l </tmp/pnpm/99.130)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - '99.130'
+  RUN_UAT:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/99.130 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+  RootedInternalClusterVisitor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Codename Horizon
+          command: |
+            mkdir -p /tmp/pnpm
+            { set +o pipefail 2>/dev/null; ls -pth1 /home | cat -n; true ; } > /tmp/pnpm/374c697f77
+            echo "Produced artifact for stage [v8-edge2]; size=$(wc -c </tmp/pnpm/374c697f77); lines=$(wc -l </tmp/pnpm/374c697f77)"
+      - persist_to_workspace:
+          root: /tmp/pnpm
+          paths:
+            - '374c697f77'
+  v8-edge2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/pnpm
+      - run:
+          name: Take workspace
+          command: |
+            [[ "$(cat /tmp/pnpm/374c697f77 2>/dev/null)" =~ [[:digit:]]{3,} ]] && echo "has long num" || echo "no"
+      - run:
+          name: Fetch HEAD
+          command: git clone --depth 1 --quiet https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull static data
+          command: tar --extract --file=old-files.tar
+      - run:
+          name: Finalize build
+          command: sleep 25s
+      - run:
+          name: Collect artifacts
+          command: mkdir -p artifacts
+      - run:
+          command: ./prime-streamer
+
+workflows:
+  matrix:
+    jobs:
+      - OPT_GENERATOR
+      - november:
+          requires:
+            - OPT_GENERATOR
+      - expect_limit_min:
+          requires:
+            - OPT_GENERATOR
+      - q1-rev:
+          requires:
+            - expect_limit_min
+      - coupon_124:
+          requires:
+            - expect_limit_min
+      - rm-webhook-reload:
+          requires:
+            - coupon_124
+      - XrayMike:
+          requires:
+            - coupon_124
+      - verify-production-docker-image:
+          requires:
+            - XrayMike
+      - maxCurveWh:
+          requires:
+            - XrayMike
+      - HOOK_PROD:
+          requires:
+            - maxCurveWh
+      - lzy6:
+          requires:
+            - maxCurveWh
+      - bun-ship:
+          requires:
+            - lzy6
+      - gjm2p:
+          requires:
+            - lzy6
+      - CORE-921:
+          requires:
+            - gjm2p
+      - TZ_PUBLIC:
+          requires:
+            - gjm2p
+      - uniform-9:
+          requires:
+            - TZ_PUBLIC
+      - p:
+          requires:
+            - TZ_PUBLIC
+      - dp-alt:
+          requires:
+            - p
+      - tb_task_bundle:
+          requires:
+            - p
+      - do-the-thing:
+          requires:
+            - tb_task_bundle
+      - mustOrder:
+          requires:
+            - tb_task_bundle
+      - nova-alpha:
+          requires:
+            - mustOrder
+      - X35:
+          requires:
+            - mustOrder
+      - update-db:
+          requires:
+            - X35
+      - cloudprod4
+      - has-backup
+      - q4-cleanup:
+          requires:
+            - cloudprod4
+            - has-backup
+      - Rollout_Image9:
+          requires:
+            - cloudprod4
+            - has-backup
+      - build:
+          requires:
+            - cloudprod4
+            - has-backup
+      - v2-preview:
+          requires:
+            - cloudprod4
+            - has-backup
+      - RUN_PROD:
+          requires:
+            - cloudprod4
+            - has-backup
+      - shippit:
+          requires:
+            - cloudprod4
+            - has-backup
+      - hotfix-6864:
+          requires:
+            - cloudprod4
+            - has-backup
+      - java17-test:
+          requires:
+            - cloudprod4
+            - has-backup
+      - badge_cell
+      - go-live:
+          requires:
+            - badge_cell
+      - tryAttach:
+          requires:
+            - badge_cell
+      - RUN_UAT:
+          requires:
+            - tryAttach
+      - label-peek:
+          requires:
+            - tryAttach
+      - v5-ga4:
+          requires:
+            - label-peek
+      - ModelV11:
+          requires:
+            - label-peek
+      - v7-nightly:
+          requires:
+            - ModelV11
+      - ipIPArticle:
+          requires:
+            - ModelV11
+      - jan26-smoke:
+          requires:
+            - ipIPArticle
+      - LANGUAGE_AR_HU:
+          requires:
+            - ipIPArticle
+      - v8-nightly:
+          requires:
+            - LANGUAGE_AR_HU
+      - sqrt-19:
+          requires:
+            - LANGUAGE_AR_HU
+      - perseus-final:
+          requires:
+            - sqrt-19
+      - MAX_ADAPTER_MHZ:
+          requires:
+            - sqrt-19
+      - assemble-quick-release-candidate:
+          requires:
+            - MAX_ADAPTER_MHZ
+      - RootedInternalClusterVisitor:
+          requires:
+            - MAX_ADAPTER_MHZ
+      - v8-edge2:
+          requires:
+            - RootedInternalClusterVisitor
+      - seedkhz:
+          requires:
+            - RootedInternalClusterVisitor
+      - PROD_BUILD_6:
+          requires:
+            - seedkhz
